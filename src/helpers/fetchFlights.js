@@ -7,7 +7,7 @@ const ECONOMY_URL = `https://tokigames-challenge.herokuapp.com/api/flights/cheap
 let businessList = [];
 let economyList = [];
 let flightList = [];
-const dateFormat = "DD MMMM YYYY, hh:mm";
+const dateFormat = "DD MMMM YYYY, HH:mm";
 
 const manipulateBusinessList = data => {
   console.log("businessList:");

@@ -52,17 +52,17 @@ export function filterSortFlightsDoneAction(flights) {
   };
 }
 
-export function addNewFlightAction(flight) {
+export function createFlightAction(flight) {
   return {
     type: ActionTypes.CREATE_FLIGHT,
     payload: flight
   };
 }
 
-export function addNewFlightDoneAction(flights) {
+export function createFlightErrorAction(error) {
   return {
-    type: ActionTypes.CREATE_FLIGHT_COMPLETED,
-    payload: flights
+    type: ActionTypes.CREATE_FLIGHT_ERROR,
+    payload: error
   };
 }
 

@@ -8,11 +8,11 @@ import AddIcon from "@material-ui/icons/Add";
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import { connect } from "react-redux";
-import { fetchFlightsAction } from "../../redux/actions";
+import { fetchFlightsAction, createFlightAction } from "../../redux/actions";
 import _ from "lodash";
 
 let tableData = [];
-
+let newFlight = {};
 const columns = [
   {
     title: "Departure",
@@ -81,11 +81,141 @@ function onSearch(val) {
   console.log("search:", val);
 }
 
+function onOk(value) {
+  console.log("onOk: ", value);
+}
+
+const FlightModal = props => {
+  const [newFlight, setNewFlight] = useState({
+    class: "",
+    arrival: "",
+    departure: "",
+    departureTime: null,
+    arrivalTime: null
+  });
+
+  function onRadioChange(e) {
+    console.log("radio change");
+    console.log(e.target.value);
+
+    setNewFlight(newFlight => ({
+      ...newFlight,
+      class: e.target.value === 0 ? "economy" : "business"
+    }));
+  }
+
+  function onDatePicker1Change(value, dateString) {
+    console.log("Selected Time: ", value);
+    console.log("Formatted Selected Time: ", dateString);
+
+    setNewFlight(newFlight => ({
+      ...newFlight,
+      departureTime: dateString
+    }));
+  }
+  function onDatePicker2Change(value, dateString) {
+    console.log("Selected Time: ", value);
+    console.log("Formatted Selected Time: ", dateString);
+    setNewFlight(newFlight => ({
+      ...newFlight,
+      arrivalTime: dateString
+    }));
+  }
+  const departureInputBlur = e => {
+    console.log("deptInputBlur");
+    console.log(e.target.value);
+    setNewFlight(newFlight => ({
+      ...newFlight,
+      departure: e.target.value
+    }));
+  };
+  const arrivalInputBlur = e => {
+    console.log("arInputBlur");
+    console.log(e.target.value);
+    setNewFlight(newFlight => ({
+      ...newFlight,
+      arrival: e.target.value
+    }));
+  };
+
+  const handleModalOk = () => {
+    props.handleClose();
+    openNotification();
+    console.log(newFlight);
+    props.createFlight([newFlight]);
+  };
+
+  return (
+    <Modal
+      title="Add a flight"
+      visible={props.flightModalVisible}
+      onOk={handleModalOk}
+      onCancel={props.handleClose}
+    >
+      <div className="modal-body">
+        <div className="radio-buttons">
+          <p>Class :</p>
+          <Radio.Group id="modalRadioGroup" onChange={onRadioChange}>
+            <Radio id="modalRadio1" value={0}>
+              Economy
+            </Radio>
+            <Radio id="modalRadio2" value={1}>
+              Business
+            </Radio>
+          </Radio.Group>
+        </div>
+        <div className="departure-input">
+          <p>Departure </p>
+
+          <Input
+            id="departureInput"
+            placeholder="From"
+            allowClear
+            onBlur={departureInputBlur}
+          />
+        </div>
+        <div className="arrival-input">
+          <p>Arrival </p>
+
+          <Input
+            id="arrivalInput"
+            placeholder="To"
+            allowClear
+            onBlur={arrivalInputBlur}
+          />
+        </div>
+        <div className="departure-datetime">
+          <p>Departure Time </p>
+
+          <DatePicker
+            id="departureDatePicker"
+            showTime={{ format: "HH:mm" }}
+            format="DD MMMM YYYY, HH:mm"
+            placeholder="Select Time"
+            onChange={onDatePicker1Change}
+            onOk={onOk}
+          />
+        </div>
+        <div className="arrival-datetime">
+          <p>Arrival Time </p>
+
+          <DatePicker
+            id="arrivalDatePicker"
+            showTime={{ format: "HH:mm" }}
+            format="DD MMMM YYYY, HH:mm"
+            placeholder="Select Time"
+            onChange={onDatePicker2Change}
+            onOk={onOk}
+          />
+        </div>{" "}
+      </div>
+    </Modal>
+  );
+};
+
 function Flights(props) {
   const [flightModalVisible, setFlightModalVisible] = useState(false);
-  const [flightModalRadio, setFlightModalRadio] = useState(1);
   const [tableData, setTableData] = useState([]);
-
   useEffect(() => props.fetchFlights(), []);
 
   const showFlightModal = () => {
@@ -96,84 +226,13 @@ function Flights(props) {
     setFlightModalVisible(false);
   };
 
-  const handleOk = () => {
-    setFlightModalVisible(false);
-    openNotification();
-  };
-
-  const onRadioChange = e => {
-    setFlightModalRadio(e.target.value);
-  };
-
-  const deptInputChange = () => {
-    console.log("deptInputChange");
-  };
-
-  function onChange(value, dateString) {
-    console.log("Selected Time: ", value);
-    console.log("Formatted Selected Time: ", dateString);
-  }
-
-  function onOk(value) {
-    console.log("onOk: ", value);
-  }
-
-  const FlightModal = () => (
-    <Modal
-      title="Add a flight"
-      visible={flightModalVisible}
-      onOk={handleOk}
-      onCancel={hideFlightModal}
-    >
-      <div className="modal-body">
-        <div className="radio-buttons">
-          <p>Class :</p>
-          <Radio.Group onChange={onRadioChange} value={flightModalRadio}>
-            <Radio value={1}>Economy</Radio>
-            <Radio value={2}>Business</Radio>
-          </Radio.Group>
-        </div>
-        <div className="departure-input">
-          <p>Departure </p>
-
-          <Input placeholder="From" allowClear onChange={deptInputChange} />
-        </div>
-        <div className="arrival-input">
-          <p>Arrival </p>
-
-          <Input placeholder="To" allowClear onChange={deptInputChange} />
-        </div>
-        <div className="departure-datetime">
-          <p>Departure Time </p>
-
-          <DatePicker
-            showTime={{ format: "HH:mm" }}
-            format="YYYY-MM-DD HH:mm"
-            placeholder="Select Time"
-            onChange={onChange}
-            onOk={onOk}
-          />
-        </div>
-        <div className="arrival-datetime">
-          <p>Arrival Time </p>
-
-          <DatePicker
-            showTime={{ format: "HH:mm" }}
-            format="YYYY-MM-DD HH:mm"
-            placeholder="Select Time"
-            onChange={onChange}
-            onOk={onOk}
-          />
-        </div>{" "}
-      </div>
-    </Modal>
-  );
-
   console.log("flight props");
   console.log(props);
 
-  const departureList = _.uniq(props.flights.map(item => item.departure));
-  const arrivalList = _.uniq(props.flights.map(item => item.arrival));
+  const departureList =
+    props.flight && _.uniq(props.flights.map(item => item.departure));
+  const arrivalList =
+    props.flight && _.uniq(props.flights.map(item => item.arrival));
   console.log("departureList");
   console.log(departureList);
   console.log("arrivalList");
@@ -181,7 +240,11 @@ function Flights(props) {
 
   return (
     <div className="flights-section">
-      <FlightModal />
+      <FlightModal
+        flightModalVisible={flightModalVisible}
+        handleClose={() => hideFlightModal()}
+        createFlight={props.createFlight}
+      />
       <div className="flights-tab">
         <Avatar className="add-avatar" onClick={showFlightModal}>
           <AddIcon />
@@ -204,9 +267,10 @@ function Flights(props) {
             }
           >
             <Option key="all">All</Option>
-            {departureList.map((item, index) => (
-              <Option key={index}>{item}</Option>
-            ))}
+            {departureList &&
+              departureList.map((item, index) => (
+                <Option key={index}>{item}</Option>
+              ))}
           </Select>
         </div>
 
@@ -230,9 +294,10 @@ function Flights(props) {
           >
             <Option key="all">All</Option>
 
-            {arrivalList.map((item, index) => (
-              <Option key={index}>{item}</Option>
-            ))}
+            {arrivalList &&
+              arrivalList.map((item, index) => (
+                <Option key={index}>{item}</Option>
+              ))}
           </Select>
         </div>
 
@@ -283,7 +348,8 @@ const mapStateToProps = ({ flights, loading }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchFlights: () => dispatch(fetchFlightsAction())
+  fetchFlights: () => dispatch(fetchFlightsAction()),
+  createFlight: flight => dispatch(createFlightAction(flight))
 });
 
 export default connect(

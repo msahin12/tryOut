@@ -24,25 +24,27 @@ const initialState = {
 };
 
 function rootReducer(state = initialState, action) {
+  console.log("rootReducer içinden action");
+  console.log(action);
   switch (action.type) {
     case ActionTypes.LOADING_STARTED:
       return Object.assign({}, state, {
         loading: true
-      }); 
+      });
     case ActionTypes.LOADING_FINISHED:
       return Object.assign({}, state, {
         loading: false
-      }); 
+      });
     case ActionTypes.FETCH_FLIGHTS_ERROR:
       return Object.assign({}, state, {
         flights: action.flights
-      }); 
+      });
     case ActionTypes.FETCH_FLIGHTS:
       return state;
     case ActionTypes.FETCH_FLIGHTS_COMPLETED:
       return Object.assign({}, state, {
         flights: action.flights
-      }); 
+      });
     case ActionTypes.MANIPULATE_FLIGHTS:
       return Object.assign({}, state, {
         flights: action.flights
@@ -61,7 +63,7 @@ function rootReducer(state = initialState, action) {
       }); //state.set("currentPage", fromJS(action.payload));
     case ActionTypes.CREATE_FLIGHT:
       return Object.assign({}, state, {
-        flights: action.flights
+        flights: [...state.flights, ...action.payload]
       }); //state.set("newFlight", fromJS(action.payload));
     case ActionTypes.CREATE_FLIGHT_COMPLETED:
       return Object.assign({}, state, {
@@ -72,7 +74,7 @@ function rootReducer(state = initialState, action) {
         flights: action.flights
       }); //state.set("error", true);
     default:
-      console.log("reducer içi alt state");
+      console.log("reducer içi alt son state");
       console.log(state);
       return state;
   }
