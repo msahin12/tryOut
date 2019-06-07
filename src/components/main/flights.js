@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./main.scss";
 import { Modal, Select, Input, Radio, notification, Icon } from "antd";
 import { Table, Divider, Tag } from "antd";
@@ -7,6 +7,11 @@ import Avatar from "@material-ui/core/Avatar";
 import AddIcon from "@material-ui/icons/Add";
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
+import { connect } from "react-redux";
+import { fetchFlightsAction } from "../../redux/actions";
+import _ from "lodash";
+
+let tableData = [];
 
 const columns = [
   {
@@ -29,6 +34,11 @@ const columns = [
     dataIndex: "arrivalTime",
     key: "arrivalTime"
   },
+  {
+    title: "Class",
+    dataIndex: "class",
+    key: "class"
+  },
 
   {
     title: "",
@@ -39,30 +49,6 @@ const columns = [
         <a href="javascript:;">Select</a>
       </span>
     )
-  }
-];
-
-const data = [
-  {
-    key: "1",
-    departure: "John Brown",
-    departureTime: 32,
-    arrival: "New York No. 1 Lake Park",
-    arrivalTime: 32
-  },
-  {
-    key: "2",
-    departure: "Jim Green",
-    departureTime: 42,
-    arrival: "London No. 1 Lake Park",
-    arrivalTime: 32
-  },
-  {
-    key: "3",
-    departure: "Joe Black",
-    departureTime: 32,
-    arrival: "Sidney No. 1 Lake Park",
-    arrivalTime: 32
   }
 ];
 
@@ -95,9 +81,12 @@ function onSearch(val) {
   console.log("search:", val);
 }
 
-function Flights() {
+function Flights(props) {
   const [flightModalVisible, setFlightModalVisible] = useState(false);
   const [flightModalRadio, setFlightModalRadio] = useState(1);
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => props.fetchFlights(), []);
 
   const showFlightModal = () => {
     setFlightModalVisible(true);
@@ -180,6 +169,16 @@ function Flights() {
     </Modal>
   );
 
+  console.log("flight props");
+  console.log(props);
+
+  const departureList = _.uniq(props.flights.map(item => item.departure));
+  const arrivalList = _.uniq(props.flights.map(item => item.arrival));
+  console.log("departureList");
+  console.log(departureList);
+  console.log("arrivalList");
+  console.log(arrivalList);
+
   return (
     <div className="flights-section">
       <FlightModal />
@@ -204,9 +203,10 @@ function Flights() {
                 .indexOf(input.toLowerCase()) >= 0
             }
           >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+            <Option key="all">All</Option>
+            {departureList.map((item, index) => (
+              <Option key={index}>{item}</Option>
+            ))}
           </Select>
         </div>
 
@@ -228,9 +228,11 @@ function Flights() {
                 .indexOf(input.toLowerCase()) >= 0
             }
           >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+            <Option key="all">All</Option>
+
+            {arrivalList.map((item, index) => (
+              <Option key={index}>{item}</Option>
+            ))}
           </Select>
         </div>
 
@@ -251,6 +253,7 @@ function Flights() {
                 .indexOf(input.toLowerCase()) >= 0
             }
           >
+            <Option key="all">All</Option>
             <Option value="economy">Economy</Option>
             <Option value="business">Business</Option>
           </Select>
@@ -261,10 +264,29 @@ function Flights() {
             Search
           </Button>
         </div>
-        <Table scroll={{ x: "auto" }} columns={columns} dataSource={data} />
+        <Table
+          scroll={{ x: "auto" }}
+          columns={columns}
+          dataSource={props.flights}
+          loading={props.loading}
+          pagination={{ pageSize: 5 }}
+        />
       </div>
     </div>
   );
 }
 
-export default Flights;
+const mapStateToProps = ({ flights, loading }) => {
+  console.log("mapStateToProps içi flights");
+  console.log(flights);
+  return { flights, loading };
+};
+
+const mapDispatchToProps = dispatch => ({
+  fetchFlights: () => dispatch(fetchFlightsAction())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Flights);
