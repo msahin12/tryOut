@@ -1,5 +1,5 @@
 /**
- * Test sagas
+ * Unit testing of Sagas.
  */
 
 import  flightSaga, {FetchFlights } from "../sagas/flightSaga";

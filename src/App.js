@@ -1,5 +1,14 @@
-import "babel-polyfill";
+/**
+ * Summary.
+ *
+ * This file contains the main router and provider.
+ * @author Mustafa SAHIN.
+ * @email  mustafa.sahin.co@gmail.com 
+ * @since  1.0.0
+ */
 
+
+import "babel-polyfill";
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";

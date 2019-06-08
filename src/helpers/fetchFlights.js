@@ -1,3 +1,14 @@
+
+/**
+ * Summary.
+ *
+ * This helper, fetchFlight, gets the flights list asynchronously and manipulates it. 
+ *
+ * 
+ */
+
+
+
 import axios from "axios";
 import moment from "moment";
 import _ from "lodash";

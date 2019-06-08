@@ -19,6 +19,10 @@ import { fetchFlightsAction, createFlightAction } from "../../redux/actions";
 import _ from "lodash";
 import FlightModal from "./createFlightModal";
 import moment from "moment";
+
+const { Option } = Select;
+
+//Columns for the flights table.
 const columns = [
   {
     title: "Departure",
@@ -70,8 +74,7 @@ const columns = [
   }
 ];
 
-const { Option } = Select;
-
+// Main function of the component.
 function Flights(props) {
   const [flightModalVisible, setFlightModalVisible] = useState(false);
   const [allData, setAllData] = useState(props.flights);

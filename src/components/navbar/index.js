@@ -1,3 +1,10 @@
+
+/**
+ * Summary.
+ *
+ * The Navbar Component
+ */
+
 import React from "react";
 import "./navbar.scss";
 import AppBar from "@material-ui/core/AppBar";

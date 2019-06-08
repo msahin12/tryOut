@@ -1,4 +1,10 @@
-import React from "react";
+/**
+ * Summary.
+ *
+ * The Footer Component
+ */
+
+ import React from "react";
 import "./footer.scss";
 
 const Footer = () => {

@@ -1,4 +1,10 @@
-import React from "react";
+/**
+ * Summary.
+ *
+ * This file is the container for main components.
+ */
+
+ import React from "react";
 
 import Navbar from "../components/navbar";
 import Main from "../components/main";
