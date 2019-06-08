@@ -49,6 +49,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   padding: 5px 2px 5px 5px;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .main-labels {
@@ -90,4 +91,17 @@
   margin-top: 30px !important;
   border-radius: 10px !important;
   width: 100% !important;
+}
+
+@media screen and (max-width: 1050px) {
+  .flights-tab {
+    padding: 20px 20px;
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .flights-tab {
+    flex-direction: column;
+  }
 }
