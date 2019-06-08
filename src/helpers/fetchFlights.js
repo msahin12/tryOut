@@ -1,13 +1,10 @@
-
 /**
  * Summary.
  *
- * This helper, fetchFlight, gets the flights list asynchronously and manipulates it. 
+ * This helper, fetchFlight, gets the flights list asynchronously and manipulates it.
  *
- * 
+ *
  */
-
-
 
 import axios from "axios";
 import moment from "moment";
@@ -22,8 +19,6 @@ let flightList = [];
 const dateFormat = "DD MMMM YYYY, HH:mm";
 
 const manipulateBusinessList = data => {
-  console.log("businessList:");
-
   businessList = data.map((item, index) => {
     let myDate = new Date(item.departureTime * 1000);
     let newDepartureTime = moment(myDate.toGMTString()).format(dateFormat);
@@ -65,7 +60,6 @@ const fetchFlights = async page => {
   if (businessResponse.status >= 400) {
     throw new Error(businessResponse.errors);
   }
-  console.log("fetching.....");
   manipulateBusinessList(businessResponse.data.data);
   const economyResponse = await axios.get(ECONOMY_URL);
   if (economyResponse.status >= 400) {

@@ -99,8 +99,6 @@ function Flights(props) {
     setDataInit(1);
   };
 
-  console.log("flight props");
-  console.log(props);
   let tableData = props.flights;
 
   let departureList =
@@ -270,8 +268,6 @@ function Flights(props) {
 }
 
 const mapStateToProps = ({ flights, loading }) => {
-  console.log("mapStateToProps içi flights");
-  console.log(flights);
   return { flights, loading };
 };
 

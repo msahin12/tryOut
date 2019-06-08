@@ -1,15 +1,12 @@
 import * as ActionTypes from "./ActionTypes";
 
 export function fetchFlightsAction() {
-  console.log("fetchFlightsAction çağrıldı");
   return {
     type: ActionTypes.FETCH_FLIGHTS
   };
 }
 
 export function fetchFlightsCompletedAction(flights) {
-  console.log("fetchFlightsCompletedAction çağrıldı");
-
   return {
     type: ActionTypes.FETCH_FLIGHTS_COMPLETED,
     flights
@@ -23,16 +20,12 @@ export function fetchErrorAction(error) {
   };
 }
 export function loadStartAction() {
-  console.log("loadStartAction çağrıldı");
-
   return {
     type: ActionTypes.LOADING_STARTED
   };
 }
 
 export function loadEndAction() {
-  console.log("loadEndAction çağrıldı");
-
   return {
     type: ActionTypes.LOADING_FINISHED
   };

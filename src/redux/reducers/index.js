@@ -5,15 +5,12 @@
  */
 import * as ActionTypes from "../actions/ActionTypes";
 
-
 const initialState = {
   flights: [],
   loading: false
 };
 
 function rootReducer(state = initialState, action) {
-  console.log("rootReducer içinden action");
-  console.log(action);
   switch (action.type) {
     case ActionTypes.LOADING_STARTED:
       return Object.assign({}, state, {
@@ -62,8 +59,6 @@ function rootReducer(state = initialState, action) {
         flights: action.flights
       }); //state.set("error", true);
     default:
-      console.log("reducer içi alt son state");
-      console.log(state);
       return state;
   }
 }
