@@ -33,31 +33,31 @@ function rootReducer(state = initialState, action) {
     case ActionTypes.MANIPULATE_FLIGHTS:
       return Object.assign({}, state, {
         flights: action.flights
-      }); //state.set("filters", fromJS(action.payload));
+      }); 
     case ActionTypes.MANIPULATE_FLIGHTS_COMPLETED:
       return Object.assign({}, state, {
         flights: action.flights
-      }); //state.set("filteredFlights", fromJS(action.payload));
+      }); 
     case ActionTypes.PAGINATION_STARTED:
       return Object.assign({}, state, {
         flights: action.flights
-      }); //state.set("pagination", fromJS(action.payload));
+      });
     case ActionTypes.PAGINATION_COMPLETED:
       return Object.assign({}, state, {
         flights: action.flights
-      }); //state.set("currentPage", fromJS(action.payload));
+      }); 
     case ActionTypes.CREATE_FLIGHT:
       return Object.assign({}, state, {
         flights: [...state.flights, ...action.payload]
-      }); //state.set("newFlight", fromJS(action.payload));
+      }); 
     case ActionTypes.CREATE_FLIGHT_COMPLETED:
       return Object.assign({}, state, {
         flights: action.flights
-      }); //state.set("flights", action.payload);
+      }); 
     case ActionTypes.CREATE_FLIGHT_ERROR:
       return Object.assign({}, state, {
         flights: action.flights
-      }); //state.set("error", true);
+      }); 
     default:
       return state;
   }

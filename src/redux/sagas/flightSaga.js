@@ -13,7 +13,6 @@ import { fetchFlights } from "../../helpers/fetchFlights";
 
 export function* FetchFlights() {
   try {
-    //    const page = yield select(getPage);
     yield put(loadStartAction());
 
     const flightData = yield call(fetchFlights);
