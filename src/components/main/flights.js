@@ -88,7 +88,6 @@ function Flights(props) {
 
   useEffect(() => {
     props.fetchFlights();
-    console.log("useeffect çalşıtı");
   }, []);
 
   const showFlightModal = () => {
