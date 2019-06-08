@@ -2,15 +2,15 @@
   background: #2b2b35;
   min-height: 800px;
   height: auto;
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding-top: 40px;
+  padding-bottom: 80px;
   background-image: url("/images/singapore.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .main-heading {
-  font-size: 32px;
+  font-size: 28px;
   margin-left: 24px; //16
   color: #ffffff;
   font-weight: bold;
@@ -21,14 +21,14 @@
   width: 100%;
   height: auto;
   //border: 1px solid red;
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .flights-tab {
-  padding: 100px 50px;
+  padding: 50px 50px;
   width: 70%;
   height: auto;
   min-height: 300px;
@@ -36,7 +36,7 @@
   border-radius: 15px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
   position: relative;
 }
@@ -44,17 +44,29 @@
 .departureSelect,
 .arrivalSelect,
 .classSelect {
-  width: 200px;
+  width: 210px;
   text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px 2px 5px 5px;
+  border-radius: 5px;
+}
+
+.main-labels {
+  //border: 1px red solid;
+  width: auto;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: left;
+  padding-left: 5px;
 }
 
 .add-avatar {
   margin: 10px;
-  background-color: rgba(63, 81, 181, 0.7) !important;
+  background-color: rgba(63, 81, 181, 0.9) !important;
   cursor: pointer;
   position: absolute !important;
   right: 0;
-  top: -28px;
+  top: -29px;
 }
 
 .modal-body {
@@ -75,7 +87,7 @@
 .ant-table-wrapper {
   background-color: #ffffff !important;
   padding: 10px !important;
-  margin-top: 50px !important;
+  margin-top: 30px !important;
   border-radius: 10px !important;
   width: 100% !important;
 }

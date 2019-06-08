@@ -1,5 +1,6 @@
 import axios from "axios";
 import moment from "moment";
+import _ from "lodash";
 
 const BUSINESS_URL = `https://tokigames-challenge.herokuapp.com/api/flights/business`;
 const ECONOMY_URL = `https://tokigames-challenge.herokuapp.com/api/flights/cheap`;
@@ -19,19 +20,16 @@ const manipulateBusinessList = data => {
     let newArrivalTime = moment(myDate2.toGMTString()).format(dateFormat);
 
     return {
-      class: "business",
+      class: "Business",
       departure: item.departure,
       arrival: item.arrival,
       departureTime: newDepartureTime,
       arrivalTime: newArrivalTime
     };
   });
-  console.log(businessList);
 };
 
 const manipulateEconomyList = data => {
-  console.log("economyList:");
-
   economyList = data.map((item, index) => {
     let myDate = new Date(item.departure * 1000);
     let newDepartureTime = moment(myDate.toGMTString()).format(dateFormat);
@@ -41,14 +39,13 @@ const manipulateEconomyList = data => {
     let departure = routeArray[0];
     let arrival = routeArray[1];
     return {
-      class: "economy",
+      class: "Economy",
       departure: departure,
       arrival: arrival,
       departureTime: newDepartureTime,
       arrivalTime: newArrivalTime
     };
   });
-  console.log(economyList);
 };
 
 const fetchFlights = async page => {
@@ -65,9 +62,8 @@ const fetchFlights = async page => {
   }
   manipulateEconomyList(economyResponse.data.data);
 
-  flightList = businessList.concat(economyList);
-  console.log("flightList");
-  console.log(flightList);
+  let flightList2 = businessList.concat(economyList);
+  flightList = _.sortBy(flightList2, o => o.departure);
 
   return flightList;
 };

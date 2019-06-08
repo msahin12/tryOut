@@ -1,7 +1,6 @@
-import { take, put, call, takeEvery, select } from "redux-saga/effects";
+import { take, put, call, takeEvery } from "redux-saga/effects";
 
 import {
-  fetchFlightsAction,
   fetchFlightsCompletedAction,
   fetchErrorAction,
   loadStartAction,

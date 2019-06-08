@@ -4,19 +4,7 @@
  *
  */
 import * as ActionTypes from "../actions/ActionTypes";
-import { fromJS, List } from "immutable";
 
-/* export const initialState = fromJS({
-  flights: List(),
-  filteredFlights: List(),
-  currentPage: List(),
-  filters: fromJS({
-    sortedAs: {}
-  }),
-  pagination: fromJS({ page: 1, show: 10 }),
-  loading: true,
-  error: false
-}); */
 
 const initialState = {
   flights: [],

@@ -9,6 +9,7 @@ const Navbar = () => {
       <Toolbar>
         <img
           src="/images/toki.jpg"
+          alt="toki"
           style={{
             width: "30px",
             marginRight: "10px"
